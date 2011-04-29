@@ -14,7 +14,7 @@ public class BayeuxInitializer extends GenericServlet
     public void init() throws ServletException
     {
         BayeuxServer bayeux = (BayeuxServer)getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
-        new HelloService(bayeux);
+        new RemoteConsoleService(bayeux);
     }
 
     public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException

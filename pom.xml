@@ -7,8 +7,11 @@
     <groupId>com.51systems</groupId>
     <artifactId>remote-console</artifactId>
     <packaging>war</packaging>
+    <name>Remote Console</name>
     <version>0.0.1-SNAPSHOT</version>
 
+    <description>Implementation of a dojo cometd based remote console</description>
+    <url>http://51systems.com</url>
     <build>
         <defaultGoal>install</defaultGoal>
         <plugins>
