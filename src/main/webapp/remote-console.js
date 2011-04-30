@@ -5,15 +5,33 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 	
 	// summary:
 	//	Full url to the server endpoint
+	// attr: server
 	_server: false,
 	
 	// summary:
 	//	name of the channel to use when communicating with the server
+	// attr: channel
 	_channel: false,
 	
 	// summary:
 	//	Flag to indicate that we are using the dojox.json.ref
+	// default: false
+	// attr: data-json-ref
 	_useJsonRef: false,
+	
+	// summary:
+	//	flag to indicate that we are replacing the console methods, rather than
+	//	connecting to them
+	// default: false
+	// attr: replace-console-methods
+	_replaceConsoleMethods: false,
+	
+	// summary:
+	//	flag to indicate that we are only introducing the console.remote.* methods, not binding
+	//	to the regular methods
+	// default: false
+	// attr: remote-methods-only
+	_remoteMethodsOnly: false,
 
 	init: function(){
 		// summary:
@@ -39,6 +57,9 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 			dojo.require('dojox.json.ref');
 		}
 		
+		dext.remoteConsole._replaceConsoleMethods = ((scriptTag.attr('replace-console-methods')[0] || false) == "true");
+		dext.remoteConsole._remoteMethodsOnly = ((scriptTag.attr('remote-methods-only')[0] || false) == "true");
+		
 		//Parse the methods to bind to 
 		//And actually bind to them
 		
@@ -54,11 +75,29 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 			return;
 		}
 		
+		//Create the console.remote methods
+		var remoteConsoleObj = dojo.getObject('console.remote', true);
 		dojo.forEach(bindMethodArray, function(/*string*/ item){
-			dojo.connect(console, item, function(){
+			dojo.connect(remoteConsoleObj, item, function(){
 				dext.remoteConsole.onConsoleMethod(item, arguments);
 			});
 		});
+		
+		//Check to see if we are binding to the console, methods and do so
+		if(!dext.remoteConsole._remoteMethodsOnly){
+			dojo.forEach(bindMethodArray, function(/*string*/ item){
+				
+				if(dext.remoteConsole._replaceConsoleMethods){
+					console[item] = function(){
+						dext.remoteConsole.onConsoleMethod(item, arguments);
+					};
+				}else{
+					dojo.connect(console, item, function(){
+						dext.remoteConsole.onConsoleMethod(item, arguments);
+					});
+				}
+			});
+		}
 		
 		//Initalize the connection with the server
 		dojox.cometd.init(dext.remoteConsole._server);

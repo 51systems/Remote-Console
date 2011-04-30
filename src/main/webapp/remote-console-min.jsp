@@ -5,6 +5,7 @@
 
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dojo.css"> 
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
     
     <script type="text/javascript">
     	var dojoConfig = {
@@ -13,8 +14,7 @@
     </script>
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js.uncompressed.js" type="text/javascript"></script>
     
-   
-    <script src="remote-console.js" data-server="http://localhost:8080${pageContext.request.contextPath}/cometd" data-channel="demo" data-json-ref="true"></script>
+    <script src="remote-console.js" data-server="http://localhost:8080${pageContext.request.contextPath}/cometd" data-channel="demo"></script>
     
     <script type="text/javascript">
     	dojo.require('dijit.form.Form');
@@ -42,6 +42,7 @@
 <body class="claro">
 	<h1>Demo Page</h1>
 	<p>This page demonstrates how a console may send data back to the debugging firebug in the main page</p>
+	<p>This page does NOT use the dojox.json.ref module for json serialization</p>
 	<p>Try it for yourself: On index.jsp connect to the local server on the "demo" channel, then on this page open up the firebug console and type console.log("hello world");</p>
 	
     <form dojoType="dijit.form.Form" onSubmit="return onFormSubmit(this); return false;">

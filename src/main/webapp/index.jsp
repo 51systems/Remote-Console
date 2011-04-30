@@ -4,7 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dojo.css"> 
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
     
     <script type="text/javascript">
     	var dojoConfig = {
@@ -12,17 +14,7 @@
     	};
     </script>
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" type="text/javascript"></script>
-    
-   
-    <%--
-    The reason to use a JSP is that it is very easy to obtain server-side configuration
-    information (such as the contextPath) and pass it to the JavaScript environment on the client.
-    --%>
-    <script type="text/javascript">
-        var config = {
-            contextPath: '${pageContext.request.contextPath}'
-        };
-    </script>
+
     
     <script type="text/javascript">
     	dojo.require('dijit.form.Form');
@@ -62,8 +54,6 @@
     			argArray[i] = args[i];
     		}
     		
-    		
-    		
     		console[message.data.command].apply(this, argArray);
     	}
     	
@@ -73,17 +63,6 @@
     	}
     	
     </script>
-    
-    <style type="text/css">
-    	.input-field{
-    		padding-left: 2em;
-    	}
-    	
-    	.input-label{
-    		font-weight: bold;
-    	}
-    </style>
-    
 </head>
 <body class="claro">
     <div id="body">
@@ -103,7 +82,8 @@
     	
     	<br/><br/><br/>
     	
-    	Try the <a href="remote-console.jsp">Demo Page</a> to see the remote console in action!
+    	Try the <a href="remote-console.jsp">Demo Page</a> to see the remote console in action!<br/>
+    	Try the <a href="remote-console-min.jsp">No dojox.json.ref Demo Page</a> to see the remote console in action with normal Json serialization!<br/>
     </div>
 </body>
 </html>
