@@ -20,7 +20,7 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 	_useJsonRef: false,
 	
 	// summary:
-	//	flag to indicate that we are replacing the console methods, rather than
+	//	Flag to indicate that we are replacing the console methods, rather than
 	//	connecting to them.
 	//	This is needed to get internet explorer working
 	// default: false
@@ -28,7 +28,7 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 	_replaceConsoleMethods: false,
 	
 	// summary:
-	//	flag to indicate that we are only introducing the console.remote.* methods, not binding
+	//	Flag to indicate that we are only introducing the console.remote.* methods, not binding
 	//	to the regular methods
 	// default: false
 	// attr: remote-methods-only
