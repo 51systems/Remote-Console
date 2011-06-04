@@ -21,7 +21,8 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 	
 	// summary:
 	//	flag to indicate that we are replacing the console methods, rather than
-	//	connecting to them
+	//	connecting to them.
+	//	This is needed to get internet explorer working
 	// default: false
 	// attr: replace-console-methods
 	_replaceConsoleMethods: false,
@@ -78,9 +79,9 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 		//Create the console.remote methods
 		var remoteConsoleObj = dojo.getObject('console.remote', true);
 		dojo.forEach(bindMethodArray, function(/*string*/ item){
-			dojo.connect(remoteConsoleObj, item, function(){
-				dext.remoteConsole.onConsoleMethod(item, arguments);
-			});
+			remoteConsoleObj[item] = function(){
+				dext.remoteConsole.onConsoleMethod(item, dext.remoteConsole._flattenArguments(arguments));
+			};
 		});
 		
 		//Check to see if we are binding to the console, methods and do so
@@ -89,11 +90,11 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 				
 				if(dext.remoteConsole._replaceConsoleMethods){
 					console[item] = function(){
-						dext.remoteConsole.onConsoleMethod(item, arguments);
+						dext.remoteConsole.onConsoleMethod(item, dext.remoteConsole._flattenArguments(arguments));
 					};
 				}else{
 					dojo.connect(console, item, function(){
-						dext.remoteConsole.onConsoleMethod(item, arguments);
+						dext.remoteConsole.onConsoleMethod(item, dext.remoteConsole._flattenArguments(arguments));
 					});
 				}
 			});
@@ -118,6 +119,17 @@ dojo.mixin(dojo.getObject('dext.remoteConsole', true), {
 			useJsonRef: dext.remoteConsole._useJsonRef,
 			args: args
 		});
+	},
+	
+	_flattenArguments: function(/*object*/ args){
+		// summary: 
+		//	Internet explorer has problems serializing the arguments to json
+		//	as they are actually an object so we must convert them into an array
+		var argArray = [];
+		dojo.forEach(args, function(arg){
+			argArray.push(arg);
+		});
+		return argArray;
 	}
 });
 

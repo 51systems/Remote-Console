@@ -14,7 +14,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js.uncompressed.js" type="text/javascript"></script>
     
    
-    <script src="remote-console.js" data-server="http://localhost:8080${pageContext.request.contextPath}/cometd" data-channel="demo" data-json-ref="true"></script>
+    <script src="remote-console.js" data-server="http://${pageContext.request.localAddr}:${pageContext.request.localPort}${pageContext.request.contextPath}/cometd" data-channel="demo" data-json-ref="true"></script>
     
     <script type="text/javascript">
     	dojo.require('dijit.form.Form');
